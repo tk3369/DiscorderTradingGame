@@ -17,11 +17,12 @@ include("error_handling.jl")
 include("pricing.jl")
 include("utils.jl")
 include("charting.jl")
+include("game.jl")
 
-function run_bot()
-    port = 6000
+function run_bot(port=6000)
     bot = Bot()
     register_commands(bot)
+    register_error_handler(bot)
     return start(bot, port)
 end
 

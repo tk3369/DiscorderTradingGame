@@ -28,12 +28,15 @@ function recent_date_range(lookback::DatePeriod)
     return from_date, to_date
 end
 
-function reply(client, message, content)
+# Reply to a user message with specified content.
+# Ok to pass other keyword arguments like `files`.
+function reply(client, message, content; kwargs...)
     result = create_message(
         client,
         message.channel_id;
         content,
         message_reference=MessageReference(; message_id=message.id),
+        kwargs...,
     )
     return result
 end
@@ -43,4 +46,15 @@ function expect(condition, message)
         throw(ErrorException(message))
     end
     return nothing
+end
+
+"""
+    ensurepath!(fileorpath::AbstractString)
+
+Ensure that the path exists in a way that writing to path does not error.
+Returns the argument afterwards for composability.
+"""
+function ensurepath!(fileorpath::AbstractString)
+    mkpath(dirname(fileorpath))
+    return fileorpath
 end
