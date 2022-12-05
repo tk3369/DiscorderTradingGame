@@ -10,9 +10,11 @@ DataFrames = "a93c6f00-e57d-5684-b7b6-d8193f3e46c0"
 Dates = "ade2ca70-3891-5945-98fb-dc099432e06a"
 Discorder = "c6a91ba0-1c40-48b6-bd49-67c5ab335442"
 Downloads = "f43a241f-c20a-4ad4-852c-f6b1247861c6"
+ExpiringCaches = "bd5c46ae-da38-4b10-bcdd-5005402f2c4f"
 Formatting = "59287772-0a20-5a39-b81b-1366585eb4c0"
 HTTP = "cd3eb016-35fb-5094-929b-558a96fad6f3"
 JSON3 = "0f8b85d8-7281-11e9-16c2-39a750bddbf1"
+PrettyTables = "08abe8d2-0d0c-5749-adfa-8a2ac140af0d"
 StructTypes = "856f2bd8-1eba-4b0a-8007-ebc267875bd4"
 
 [compat]

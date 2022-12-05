@@ -6,10 +6,12 @@ using DataFrames
 using Dates
 using Discorder
 using Downloads
+using ExpiringCaches
 using Formatting
 using HTTP
 using JSON3
 using StructTypes
+using PrettyTables
 
 include("types.jl")
 include("commands.jl")

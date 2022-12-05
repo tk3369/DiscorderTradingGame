@@ -70,7 +70,7 @@ function register_commands(bot, prefix=",", cmd="$(prefix)ig")
 
     # Start new game
     register_command_handler!(
-        bot, CommandTrigger(Regex("^$(cmd) start-game(.*)\$"))
+        bot, CommandTrigger(Regex("^$(cmd) start-game\$"))
     ) do client, message, _tail
         user = message.author
         affirm_non_player(user.id)
@@ -81,7 +81,7 @@ function register_commands(bot, prefix=",", cmd="$(prefix)ig")
 
     # Abandon game
     register_command_handler!(
-        bot, CommandTrigger(Regex("^$(cmd) abandon-game(.*)\$"))
+        bot, CommandTrigger(Regex("^$(cmd) abandon-game\$"))
     ) do client, message, _tail
         user = message.author
         affirm_player(user.id)
@@ -97,11 +97,104 @@ function register_commands(bot, prefix=",", cmd="$(prefix)ig")
 
     # Really abandon game
     register_command_handler!(
-        bot, CommandTrigger(Regex("^$(cmd) really-abandon-game(.*)\$"))
+        bot, CommandTrigger(Regex("^$(cmd) really-abandon-game\$"))
     ) do client, message, _tail
         user = message.author
         affirm_player(user.id)
         remove_game(user.id)
         reply(client, message, "Your investment game is now over. Play again soon!")
+    end
+
+    # Buy
+    register_command_handler!(
+        bot, CommandTrigger(Regex("^$(cmd) buy( .*)\$"))
+    ) do client, message, arg
+        user = message.author
+        affirm_player(user.id)
+        args = split(arg)
+        length(args) == 2 || throw(
+            IgUserError(
+                "Invalid command. Try `$cmd 100 aapl` to buy 100 shares of Apple Inc."
+            ),
+        )
+        symbol = strip(uppercase(args[2]))
+        shares = tryparse(Int, args[1])
+        shares !== nothing ||
+            throw(IgUserError("please enter number of shares as a number: `$shares`"))
+        purchase_price = format_amount(execute_buy(user.id, symbol, shares))
+        reply(
+            client, message, "You have bought $shares shares of $symbol at $purchase_price"
+        )
+    end
+
+    # Sell
+    register_command_handler!(
+        bot, CommandTrigger(Regex("^$(cmd) sell( .*)\$"))
+    ) do client, message, arg
+        user = message.author
+        affirm_player(user.id)
+
+        args = split(arg)
+        length(args) == 2 || throw(
+            IgUserError(
+                "Invalid command. Try `$cmd sell 100 aapl` to sell 100 shares of Apple Inc.",
+            ),
+        )
+
+        symbol = strip(uppercase(args[2]))
+        shares = tryparse(Int, args[1])
+        shares !== nothing ||
+            throw(IgUserError("please enter number of shares as a number: `$shares`"))
+
+        current_price = format_amount(execute_sell(user.id, symbol, shares))
+        reply(client, message, "You have sold $shares shares of $symbol at $current_price.")
+    end
+
+    # View holdings
+    register_command_handler!(
+        bot, CommandTrigger(Regex("^$(cmd) view( .*)\$"))
+    ) do client, message, arg
+        user = message.author
+        affirm_player(user.id)
+
+        df = get_mark_to_market_portfolio(user.id)
+        reformat_view!(df)
+
+        args = split(arg)
+        view = length(args) == 1 && args[1] == "simple" ? SimpleView() : PrettyView()
+        table = make_pretty_table(view, df)
+        total_str = format_amount(round(Int, sum(df.amount)))
+        reply(
+            client,
+            message,
+            """
+            Here is your portfolio:
+            ```
+            $table
+            ```
+            Total portfolio Value: $total_str
+            """,
+        )
+        check_bad_stocks(client, message, user, df)
+    end
+
+    # View performance
+    register_command_handler!(
+        bot, CommandTrigger(Regex("^$(cmd) perf\$"))
+    ) do client, message
+        user = message.author
+        affirm_player(user.id)
+        df = calculate_performance(user.id)
+        table = pretty_table(String, df; header=names(df))
+        reply(
+            client,
+            message,
+            """
+            Your stocks' performance today:
+            ```
+            $table
+            ```
+            """,
+        )
     end
 end

@@ -2,6 +2,10 @@
 format_amount(x::Real) = format(x; commas=true, precision=2)
 format_amount(x::Integer) = format(x; commas=true)
 
+"Formatters used by PrettyTable"
+decimal_formatter(v, i, j) = v isa Real ? format_amount(v) : v
+integer_formatter(v, i, j) = v isa Real ? format_amount(round(Int, v)) : v
+
 # Date utilities
 
 seconds_since_1970(d::Date) = (d - Day(719163)).instant.periods.value * 24 * 60 * 60
@@ -31,14 +35,16 @@ end
 # Reply to a user message with specified content.
 # Ok to pass other keyword arguments like `files`.
 function reply(client, message, content; kwargs...)
-    result = create_message(
-        client,
-        message.channel_id;
-        content,
-        message_reference=MessageReference(; message_id=message.id),
-        kwargs...,
-    )
-    return result
+    return retry(
+        () -> create_message(
+            client,
+            message.channel_id;
+            content,
+            message_reference=MessageReference(; message_id=message.id),
+            kwargs...,
+        );
+        delays=[1.0],  # retry only once after 1 sec
+    )()
 end
 
 function expect(condition, message)
