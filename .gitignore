@@ -1,4 +1,4 @@
-/Manifest.toml
+#/Manifest.toml
 
 # exclude odd files during migration
 zzz_*
