@@ -1,4 +1,4 @@
-module TradingGameBot
+module DiscorderTradingGame
 
 using CairoPlot
 using CSV

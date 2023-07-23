@@ -14,7 +14,7 @@ seconds_since_1970(d::Date) = (d - Day(719163)).instant.periods.value * 24 * 60 
 current_date() = today()
 
 # Convert a date period string into a DatePeriod object
-# julia> TradingGameBot.date_period("2y") isa Dates.DatePeriod
+# julia> DiscorderTradingGame.date_period("2y") isa Dates.DatePeriod
 # true
 function date_period(s::AbstractString)
     m = match(r"^(\d+)([ymd])$", s)

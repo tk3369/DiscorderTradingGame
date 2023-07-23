@@ -71,8 +71,9 @@ function register_commands(bot, prefix=",", cmd="$(prefix)ig")
     # Start new game
     register_command_handler!(
         bot, CommandTrigger(Regex("^$(cmd) start-game\$"))
-    ) do client, message, _tail
+    ) do client, message
         user = message.author
+        @info "user" user
         affirm_non_player(user.id)
         pf = start_new_game(user.id)
         amt = format_amount(pf.cash)
@@ -82,7 +83,7 @@ function register_commands(bot, prefix=",", cmd="$(prefix)ig")
     # Abandon game
     register_command_handler!(
         bot, CommandTrigger(Regex("^$(cmd) abandon-game\$"))
-    ) do client, message, _tail
+    ) do client, message
         user = message.author
         affirm_player(user.id)
         reply(
@@ -98,7 +99,7 @@ function register_commands(bot, prefix=",", cmd="$(prefix)ig")
     # Really abandon game
     register_command_handler!(
         bot, CommandTrigger(Regex("^$(cmd) really-abandon-game\$"))
-    ) do client, message, _tail
+    ) do client, message
         user = message.author
         affirm_player(user.id)
         remove_game(user.id)
@@ -152,7 +153,7 @@ function register_commands(bot, prefix=",", cmd="$(prefix)ig")
 
     # View holdings
     register_command_handler!(
-        bot, CommandTrigger(Regex("^$(cmd) view( .*)\$"))
+        bot, CommandTrigger(Regex("^$(cmd) view( .*)*"))
     ) do client, message, arg
         user = message.author
         affirm_player(user.id)
@@ -160,7 +161,7 @@ function register_commands(bot, prefix=",", cmd="$(prefix)ig")
         df = get_mark_to_market_portfolio(user.id)
         reformat_view!(df)
 
-        args = split(arg)
+        args = isnothing(arg) ? [] : split(arg)
         view = length(args) == 1 && args[1] == "simple" ? SimpleView() : PrettyView()
         table = make_pretty_table(view, df)
         total_str = format_amount(round(Int, sum(df.amount)))

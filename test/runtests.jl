@@ -1,6 +1,6 @@
-using TradingGameBot
+using DiscorderTradingGame
 using Test
 
-@testset "TradingGameBot.jl" begin
+@testset "DiscorderTradingGame.jl" begin
     # Write your tests here.
 end
