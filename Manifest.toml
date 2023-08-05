@@ -123,7 +123,7 @@ uuid = "ade2ca70-3891-5945-98fb-dc099432e06a"
 
 [[deps.Discorder]]
 deps = ["Base64", "Dates", "EnumX", "HTTP", "JSON3", "Logging", "LoggingExtras", "Parameters", "TOML", "TimeZones", "ZMQ"]
-git-tree-sha1 = "1fe35faf91ff7c1660d9a6ec0328c7fd1bc22e67"
+git-tree-sha1 = "5719ec95b88a30a979f810e90f3b274b6ae8180e"
 repo-rev = "master"
 repo-url = "https://github.com/tk3369/Discorder.jl"
 uuid = "c6a91ba0-1c40-48b6-bd49-67c5ab335442"
