@@ -14,6 +14,8 @@ using StructTypes
 using PrettyTables
 
 include("types.jl")
+include("history.jl")
+include("gainloss.jl")
 include("commands.jl")
 include("error_handling.jl")
 include("pricing.jl")

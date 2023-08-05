@@ -21,7 +21,7 @@ function find_historical_prices(symbol::AbstractString, from_date::Date, to_date
             CSV.File(Downloads.download(url); missingstring="null")
         )
         dropmissing!(df)
-        @info "$(now())\tig_historical_prices\t$symbol\t$from_date\t$to_date\t$elapsed"
+        @info "$(now())\thistorical_prices\t$symbol\t$from_date\t$to_date\t$elapsed"
         return df
     catch ex
         @info "Exception" ex

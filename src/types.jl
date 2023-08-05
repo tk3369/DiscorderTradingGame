@@ -25,3 +25,5 @@ struct SimpleView <: AbstractPortfolioOutputView end
 # JSON3 struct bindings
 StructTypes.StructType(::Type{IgHolding}) = StructTypes.Struct()
 StructTypes.StructType(::Type{IgPortfolio}) = StructTypes.Struct()
+
+const Optional{T} = Union{T,Nothing}
