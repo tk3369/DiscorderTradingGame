@@ -22,7 +22,7 @@ function cmd_gl(client, message, args)
 end
 
 "Return a data frame with gains/losses for user's current holdings."
-function gain_loss(user_id::UInt64)
+function gain_loss(user_id::Snowflake)
     pf = load_portfolio(user_id)
     df = get_grouped_holdings(holdings_data_frame(pf))
     rename!(df, "purchase_price" => "px_buy")
