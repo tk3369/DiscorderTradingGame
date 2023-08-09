@@ -6,7 +6,7 @@ function cmd_hist(client, message, arg)
     user = message.author
     affirm_player(user.id)
     @info "arg" arg typeof(arg)
-    if length(args) == 0
+    if length(arg) == 0
         symbol = nothing
         clause = ""
     else
