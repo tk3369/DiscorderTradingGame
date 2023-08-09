@@ -1,6 +1,7 @@
 function cmd_hist(client, message, args)
     user = message.author
     affirm_player(user.id)
+    @info "args" args typeof(args)
     symbol = uppercase(args)
     clause = " of $symbol"
 
