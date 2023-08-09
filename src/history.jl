@@ -1,4 +1,4 @@
-function cmd_hist(client, message, args...)
+function cmd_hist(client, message, args)
     user = message.author
     affirm_player(user.id)
     @info "args" args typeof(args)
