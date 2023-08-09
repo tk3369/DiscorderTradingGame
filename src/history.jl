@@ -1,13 +1,19 @@
-function cmd_hist(client, message, args)
+# The first word is determined by splitting non-alphanumeric characters
+# and then take the first token.
+first_word(str) = split(strip(str), r"[^a-zA-Z0-9]")[1]
+
+function cmd_hist(client, message, arg)
     user = message.author
     affirm_player(user.id)
-    @info "args" args typeof(args)
-    if length(args) == 1
-        symbol = uppercase(args)
-        clause = " of $symbol"
-    else
+    @info "arg" arg typeof(arg)
+    if length(args) == 0
         symbol = nothing
         clause = ""
+    else
+        # Need to take first word because the user might enter more than one symbol
+        # For example, CMD hist sym1 sym2, and in that case, arg == " sym1 sym2"
+        symbol = first_word(arg)
+        clause = " of $symbol"
     end
 
     # when symbol is nothing, retrieve the purchase history for entire portfolio
