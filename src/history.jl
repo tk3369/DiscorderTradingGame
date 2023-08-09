@@ -31,7 +31,7 @@ end
 "Return a data frame with the purchase history of current holdings."
 function hist(user_id::Snowflake, symbol::Optional{AbstractString})
     pf = load_portfolio(user_id)
-    df = holdings_data_frame(pf)
+    df = get_holdings_data_frame(pf)
     if symbol !== nothing
         filter!(:symbol => ==(symbol), df)
     end
