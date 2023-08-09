@@ -199,7 +199,11 @@ function register_commands(bot, prefix=",", cmd="$(prefix)ig")
         )
     end
 
-    register_command_handler!(cmd_hist, bot, CommandTrigger(Regex("^$(cmd) hist( .*)*\$")))
+    # CMD hist <symbol>
+    register_command_handler!(
+        cmd_hist, bot, CommandTrigger(Regex("^$(cmd) hist( .*)( .*)\$"))
+    )
+
     register_command_handler!(cmd_gl, bot, CommandTrigger(Regex("^$(cmd) gl\$")))
 
     return nothing

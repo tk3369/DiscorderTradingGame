@@ -1,13 +1,8 @@
 function cmd_hist(client, message, args)
     user = message.author
     affirm_player(user.id)
-    if length(args) >= 1
-        symbol = uppercase(args[1])
-        clause = " of $symbol"
-    else
-        symbol = nothing
-        clause = ""
-    end
+    symbol = uppercase(args)
+    clause = " of $symbol"
 
     # when symbol is nothing, retrieve the purchase history for entire portfolio
     df = hist(user.id, symbol)
@@ -33,7 +28,7 @@ function cmd_hist(client, message, args)
 end
 
 "Return a data frame with the purchase history of current holdings."
-function hist(user_id::UInt64, symbol::Optional{AbstractString})
+function hist(user_id::Snowflake, symbol::Optional{AbstractString})
     pf = load_portfolio(user_id)
     df = holdings_data_frame(pf)
     if symbol !== nothing

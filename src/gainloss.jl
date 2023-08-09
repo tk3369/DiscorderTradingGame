@@ -1,4 +1,4 @@
-function cmd_gl(client, message, args)
+function cmd_gl(client, message)
     user = message.author
     affirm_player(user.id)
     df = gain_loss(user.id)
