@@ -2,6 +2,9 @@
 # and then take the first token.
 first_word(str) = split(strip(str), r"[^a-zA-Z0-9]")[1]
 
+# Return a closure that compare with another string in a case insensitive way
+same_symbol(s1) = (s2::AbstractString) -> lowercase(s1) == lowercase(s2)
+
 function cmd_hist(client, message, arg)
     user = message.author
     affirm_player(user.id)
@@ -44,7 +47,7 @@ function hist(user_id::Snowflake, symbol::Optional{AbstractString})
     pf = load_portfolio(user_id)
     df = get_holdings_data_frame(pf)
     if symbol !== nothing
-        filter!(:symbol => ==(symbol), df)
+        filter!(:symbol => same_symbol(symbol), df)
     end
 
     df.shares = round.(Int, df.shares)
