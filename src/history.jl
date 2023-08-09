@@ -1,9 +1,14 @@
-function cmd_hist(client, message, args)
+function cmd_hist(client, message, args...)
     user = message.author
     affirm_player(user.id)
     @info "args" args typeof(args)
-    symbol = uppercase(args)
-    clause = " of $symbol"
+    if length(args) == 1
+        symbol = uppercase(args)
+        clause = " of $symbol"
+    else
+        symbol = nothing
+        clause = ""
+    end
 
     # when symbol is nothing, retrieve the purchase history for entire portfolio
     df = hist(user.id, symbol)
