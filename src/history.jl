@@ -15,7 +15,7 @@ function cmd_hist(client, message, arg)
     else
         # Need to take first word because the user might enter more than one symbol
         # For example, CMD hist sym1 sym2, and in that case, arg == " sym1 sym2"
-        symbol = uppercase(first_word(arg))
+        symbol = first_word(arg)
         clause = " of $symbol"
     end
 
