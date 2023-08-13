@@ -62,7 +62,7 @@ end
 function user_id_from_path(path::AbstractString)
     filename = basename(path)
     filename_without_extension = replace(filename, r"\.json$" => "")
-    return parse(Snowflake, filename_without_extension)
+    return Snowflake(filename_without_extension)
 end
 
 "Load all game files"
