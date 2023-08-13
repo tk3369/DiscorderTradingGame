@@ -210,5 +210,10 @@ function register_commands(bot, prefix=",", cmd="$(prefix)ig")
     # CMD rank 10
     register_command_handler!(cmd_rank, bot, CommandTrigger(Regex("^$(cmd) rank(.*)\$")))
 
+    # CMD terminate-game-server
+    register_command_handler!(
+        cmd_terminate, bot, CommandTrigger(Regex("^$(cmd) terminate-game-server\$"))
+    )
+
     return nothing
 end
