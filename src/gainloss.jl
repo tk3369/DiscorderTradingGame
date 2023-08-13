@@ -24,7 +24,7 @@ end
 "Return a data frame with gains/losses for user's current holdings."
 function gain_loss(user_id::Snowflake)
     pf = load_portfolio(user_id)
-    df = get_grouped_holdings(holdings_data_frame(pf))
+    df = get_grouped_holdings(get_holdings_data_frame(pf))
     rename!(df, "purchase_price" => "px_buy")
 
     df.px_now = fetch.(@async(get_quote(s)) for s in df.symbol)
