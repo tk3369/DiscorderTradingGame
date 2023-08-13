@@ -3,7 +3,7 @@
 # the user id from the DISCORDER_TRADING_GAME_ADMIN environment varialble.
 function cmd_terminate(client, message)
     admin_id_str = get(ENV, "DISCORDER_TRADING_GAME_ADMIN", "")
-    if admin_id_string === ""
+    if admin_id_str === ""
         @warn "Non-admin user cannot terminate server"
         return nothing
     end
