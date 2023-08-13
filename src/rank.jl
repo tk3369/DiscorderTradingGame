@@ -44,7 +44,7 @@ function format_view_table(::PrettyView, df::AbstractDataFrame)
 end
 
 function value_all_portfolios()
-    pfs = ig_load_all_portfolios()
+    pfs = load_all_portfolios()
     valuations = []
     for (id, pf) in pfs
         @debug "Evaluating portfolio" id pf
