@@ -64,3 +64,13 @@ function ensurepath!(fileorpath::AbstractString)
     mkpath(dirname(fileorpath))
     return fileorpath
 end
+
+"""
+    partition_table(df::AbstractDataFrame, rows::Integer)
+
+Take a data frame and partition it into multiple data frames, each having
+no more than `rows` rows.
+"""
+function partition_table(df::AbstractDataFrame, rows::Integer)
+    return [df[range, :] for range in Iterators.partition(1:nrow(df), rows)]
+end
