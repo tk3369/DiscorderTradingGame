@@ -1,4 +1,4 @@
-function register_commands(bot, prefix=",", cmd="$(prefix)ig")
+function register_commands(bot, prefix::Char, cmd="$(prefix)ig")
 
     # Help
     register_command_handler!(

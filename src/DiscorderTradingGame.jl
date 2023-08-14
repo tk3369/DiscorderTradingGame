@@ -25,9 +25,9 @@ include("utils.jl")
 include("charting.jl")
 include("game.jl")
 
-function run_bot(port=6000)
+function run_bot(command_prefix::Char, port=6000)
     bot = Bot()
-    register_commands(bot)
+    register_commands(bot, command_prefix)
     register_error_handler(bot)
     return start(bot, port)
 end
